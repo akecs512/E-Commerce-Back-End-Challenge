@@ -26,15 +26,29 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Products
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+  const category = await Category.create(req.body);
+  res.status(200)
+  res.send(JSON.stringify(category));
   // create a new category
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
+  const category = await Category.findOne({ where: { id: req.params.id },}, )
+  category.category_name = req.body.category_name;
+  await category.save();
+  res.status(200)
+  res.send(JSON.stringify(category));
   // update a category by its `id` value
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
+  const category = await Category.findOne({ where: { id: req.params.id },}, )
+  category.category_name = req.body.category_name;
+  await category.destroy();
+  res.status(200)
+  res.send(JSON.stringify(category));
+
   // delete a category by its `id` value
 });
 
