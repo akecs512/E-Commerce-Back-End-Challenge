@@ -23,15 +23,28 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Product data
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+  const tag = await Tag.create(req.body);
+  res.status(200)
+  res.send(JSON.stringify(tag));
   // create a new tag
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
+  const tag = await Tag.findOne({ where: { id: req.params.id },}, )
+  tag.tag_name = req.body.tag_name;
+  await tag.save();
+  res.status(200)
+  res.send(JSON.stringify(tag));
   // update a tag's name by its `id` value
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id',async (req, res) => {
+  const tag = await Tag.findOne({ where: { id: req.params.id },}, )
+  tag.tag_name = req.body.tag_name;
+  await tag.destroy();
+  res.status(200)
+  res.send(JSON.stringify(tag));
   // delete on tag by its `id` value
 });
 
